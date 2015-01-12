@@ -117,7 +117,7 @@ void dict_repr(dict* d) {
         dict_entry* cur_entry = d->entries[i];
 
         if (cur_entry != NULL && cur_entry->state == IN_USE) {
-            if (cur_entry->value == SeaNone) {
+            if (cur_entry->value == None) {
                 printf("    \"%s\": None\n", cur_entry->key);
             } else {
                 printf("    \"%s\": 0x%ld\n", cur_entry->key, (long)cur_entry->value);
