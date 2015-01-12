@@ -44,8 +44,10 @@ dict* dict_create(int max_size) {
 
 
 static void put_entry(dict* d, dict_entry* entry) {
+    int idx;
+
     entry->state = IN_USE;
-    int idx = find(d, entry->key);
+    idx = find(d, entry->key);
 
     if (!dict_valid_entry(d, idx)) {
         // only increment contained count if we're adding something new
@@ -66,9 +68,11 @@ bool dict_valid_entry(dict* d, int i) {
 
 
 void* dict_get(dict* d, char* key) {
+    dict_entry* entry;
+
     if (d->count == 0) return NULL;
 
-    dict_entry* entry = d->entries[find(d, key)];
+    entry = d->entries[find(d, key)];
 
     if (entry == NULL || entry->state == PREVIOUS_USED) {
         return NULL;
@@ -79,9 +83,11 @@ void* dict_get(dict* d, char* key) {
 
 
 void* dict_remove(dict* d, char* key) {
+    void* value;
+
     if (d->count == 0) return NULL;
 
-    void* value = dict_get(d, key);
+    value = dict_get(d, key);
     if (value == NULL) {
         return NULL;
     }
@@ -103,8 +109,9 @@ void dict_free(dict* d) {
 
 
 void dict_repr(dict* d) {
-    printf("Dict:\n");
     int i;
+
+    printf("Dict:\n");
     printf("{\n");
     for (i=0; i<d->max_size; i++) {
         dict_entry* cur_entry = d->entries[i];
@@ -137,13 +144,11 @@ char** dict_keys(dict* d) {
         }
     }
 
-    char** new_keys = realloc(
+    return realloc(
         keys,
         (idx + 1) * // leave a sentinal in place
         sizeof(char*)
     );
-
-    return new_keys;
 }
 
 
@@ -195,9 +200,11 @@ static int find(dict* d, char* key) {
 
 
 bool contains_key(dict* d, char* key) {
+    dict_entry* entry;
+
     if (d->count == 0) return FALSE;
 
-    dict_entry* entry = d->entries[find(d, key)];
+    entry = d->entries[find(d, key)];
 
     if (entry == NULL || entry->state != IN_USE) {
         return FALSE;
@@ -247,11 +254,11 @@ static void resize(dict* d, int size) {
 static int hash(dict* d, char* key) {
     int hashIdx = 0,
         key_length = strlen(key),
-        ii;
+        ii, g;
 
     for (ii = 0; ii < key_length; ii++) {
         hashIdx = (hashIdx << 4) + key[ii];
-        int g = hashIdx & 0xF0000000;
+        g = hashIdx & 0xF0000000;
         if (g != 0) {
             hashIdx = hashIdx ^ (g >> 24); // ^ is the XOR operator
         }

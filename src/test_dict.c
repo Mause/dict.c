@@ -5,11 +5,12 @@
 #include "src/bool.h"
 
 int testBasic(void) {
+    bool res;
     dict* table = dict_create(100);
 
     dict_set(table, "World", "Hello");
 
-    bool res = strcmp(
+    res = strcmp(
         dict_get(table, "World"),
         "Hello"
     ) == 0;
@@ -20,13 +21,14 @@ int testBasic(void) {
 }
 
 int testRemoveValue(void) {
+    bool res;
     dict* table = dict_create(20);
 
     dict_set(table, "World", "Hello");
 
     dict_remove(table, "World");
 
-    bool res = dict_get(table, "World") == NULL;
+    res = dict_get(table, "World") == NULL;
 
     dict_free(table);
 
@@ -34,13 +36,14 @@ int testRemoveValue(void) {
 }
 
 int testResizeLarger(void) {
+    bool res;
     dict* table = dict_create(3);
 
     dict_set(table, "World", "Hello");
     dict_set(table, "Worle", "Hello");
 
     // "the bucket number should have increased since the table was initialized",
-    bool res = table->max_size > 3;
+    res = table->max_size > 3;
 
     dict_free(table);
 
@@ -48,12 +51,13 @@ int testResizeLarger(void) {
 }
 
 int testResizeSmaller(void) {
+    bool res;
     dict* table = dict_create(7);
 
     dict_set(table, "Hello", "World");
 
     // "the bucket number should have decreased since the table was initialized",
-    bool res = table->max_size < 7;
+    res = table->max_size < 7;
 
     dict_free(table);
 
