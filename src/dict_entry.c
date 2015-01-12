@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "src/dict/dict_entry.h"
+#include "dict_entry.h"
 
 
 dict_entry* dict_create_entry(void) {

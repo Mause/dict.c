@@ -1,8 +1,8 @@
 #ifndef DICT_H
 #define DICT_H
 
-#include "src/dict/dict_entry.h"
-#include "src/bool.h"
+#include "dict_entry.h"
+#include "bool.h"
 
 typedef struct {
     int count;

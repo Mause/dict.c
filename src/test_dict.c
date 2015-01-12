@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include "src/dict/dict.h"
-#include "src/bool.h"
+#include "dict.h"
+#include "bool.h"
 
 int testBasic(void) {
     bool res;

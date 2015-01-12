@@ -3,10 +3,10 @@
 #include <string.h>
 #include <assert.h>
 
-#include "src/bool.h"
-#include "src/object/none.h"
-#include "src/dict/dict.h"
-#include "src/dict/dict_entry.h"
+#include "bool.h"
+#include "none.h"
+#include "dict.h"
+#include "dict_entry.h"
 
 static bool okFor(dict* d, char* key, int idx);
 static bool overFull(dict* d);
