@@ -4,6 +4,10 @@
 #include "dict_entry.h"
 #include "bool.h"
 
+#define MAX_STEP 5
+#define GLASS_HALF_FULL 60
+#define GLASS_HALF_EMPTY 30
+
 typedef struct {
     int count;
     int max_size;

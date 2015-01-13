@@ -182,7 +182,6 @@ static bool okFor(dict* d, char* key, int idx) {
 }
 
 
-static int MAX_STEP = 5;
 static int stepHash(int key) {
     return MAX_STEP - (key % MAX_STEP);
 }
@@ -285,9 +284,6 @@ static void resizeIfNeeded(dict* d) {
     }
 }
 
-
-static double GLASS_HALF_FULL = 60;
-static double GLASS_HALF_EMPTY = 30;
 
 static double percentageFull(dict* d) {
     return ((double)d->count) / ((double)d->max_size) * 100.0;

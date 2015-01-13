@@ -8,22 +8,21 @@ static int PRIMES[] = {
     196613, 393241, 786433, 1572869, 3145739, 6291469, 12582917, 25165843,
     50331653, 100663319, 201326611, 402653189, 805306457, 1610612741
 };
-#define PRIME_NUM 42
+#define NUM_PRIMES 42
 
 int nextBiggestPrime(int old) {
     int i;
-    for (i=0; i<PRIME_NUM; i++){
+    for (i=0; i<NUM_PRIMES; i++){
         if (PRIMES[i] > old) return PRIMES[i];
     }
 
-    return PRIMES[PRIME_NUM-1];
+    return PRIMES[NUM_PRIMES-1];
 }
 
 int nextSmallestPrime(int old) {
     int next_smallest = 0, i;
 
-    // for (int prime : PRIMES) {
-    for (i=0; i<PRIME_NUM; i++) {
+    for (i=0; i<NUM_PRIMES; i++) {
         if (PRIMES[i] < old) {
             next_smallest = PRIMES[i];
         }
