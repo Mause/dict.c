@@ -52,12 +52,16 @@ int testResizeLarger(void) {
 
 int testResizeSmaller(void) {
     bool res;
+    int actual;
     dict* table = dict_create(7);
+
+    // internally we choose the next largest prime than the number specified
+    actual = table->max_size;
 
     dict_set(table, "Hello", "World");
 
     // "the bucket number should have decreased since the table was initialized",
-    res = table->max_size < 7;
+    res = table->max_size < actual;
 
     dict_free(table);
 

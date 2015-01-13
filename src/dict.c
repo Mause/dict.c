@@ -36,7 +36,7 @@ dict* dict_create(int max_size) {
     dict* dc = calloc(1, sizeof(*dc));
 
     dc->count = 0;
-    dc->max_size = max_size;
+    dc->max_size = nextBiggestPrime(max_size);
     dc->entries = calloc(max_size, sizeof(**dc->entries));
 
     return dc;
