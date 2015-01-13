@@ -188,10 +188,11 @@ static int stepHash(int key) {
 
 
 static int find(dict* d, char* key) {
-    int idx = hash(d, key);
+    int idx = hash(d, key),
+        step = stepHash(idx);
 
     while (!okFor(d, key, idx)) {
-        idx = (idx + stepHash(idx)) % d->max_size;
+        idx = (idx + step) % d->max_size;
     }
 
     return idx;
