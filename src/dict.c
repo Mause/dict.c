@@ -43,6 +43,21 @@ dict* dict_create(int max_size) {
 }
 
 
+void dict_render_usage(dict* d) {
+    int i;
+
+    printf("|");
+    for (i=0; i<d->max_size; i++) {
+        if (dict_valid_entry(d, i)) {
+            printf("O");
+        } else {
+            printf("_");
+        }
+    }
+    printf("|\n");
+}
+
+
 static void put_entry(dict* d, dict_entry* entry) {
     int idx;
 
