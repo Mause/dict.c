@@ -78,19 +78,20 @@ char* build_markov_string(dict* lookup_table) {
 }
 
 
+void printHelp(char const *argv[]) {
+    fprintf(stderr, "%s [-d] [-n number of sentences] input_file.txt [...] \n", argv[0]);
+}
+
+
 int main(int argc, char const *argv[]) {
     dict* lookup_table;
     options* ops;
     char *str;
     int i;
 
-    if (argc == 1) {
-        fprintf(stderr, "Not enough args\n");
-        return -1;
-    }
-
     ops = parse_options(argc, argv);
     if (ops->files->len == 0) {
+        printHelp(argv);
         fprintf(stderr, "You must supply at least one source file\n");
         return -1;
     }

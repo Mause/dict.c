@@ -1,6 +1,6 @@
 #include "options.h"
 
-options* parse_options(int argc, char* argv[]) {
+options* parse_options(int argc, char const *argv[]) {
     int i;
     options* ops = calloc(sizeof(options), 1);
     ops->debug = FALSE;

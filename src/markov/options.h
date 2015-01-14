@@ -11,6 +11,6 @@ typedef struct {
     int num_sentences;
 } options;
 
-options* parse_options(int argc, char* argv[]);
+options* parse_options(int argc, char const *argv[]);
 
 #endif
