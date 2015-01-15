@@ -23,7 +23,7 @@ char* get_starting(dict* lookup_table) {
     char *starting_word, **keys;
 
     keys = dict_keys(lookup_table);
-    starting_word = strdup(keys[rand_in_range(lookup_table->count)-1]);
+    starting_word = keys[rand_in_range(lookup_table->count)-1];
     free(keys);
 
     return starting_word;
@@ -79,6 +79,20 @@ char* build_markov_string(dict* lookup_table) {
 }
 
 
+void lookup_table_free(dict* lookup_table) {
+    int i;
+
+    for (i=0; i<lookup_table->max_size; i++) {
+        if (dict_valid_entry(lookup_table, i)) {
+            dict_entry* entry = lookup_table->entries[i];
+            free(entry->key);
+            arr_free(entry->value);
+        }
+    }
+    dict_free(lookup_table);
+}
+
+
 void printHelp(char const *argv[]) {
     fprintf(stderr, "%s [-d] [-n number of sentences] input_file.txt [...] \n", argv[0]);
 }
@@ -123,7 +137,10 @@ int main(int argc, char const *argv[]) {
         printf("%d words in lookup table\n", lookup_table->count);
     }
 
-    dict_free(lookup_table);
+    arr_free(ops->files);
+    free(ops);
+
+    lookup_table_free(lookup_table);
 
     return 0;
 }

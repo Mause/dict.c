@@ -45,6 +45,10 @@ dict* tokenise_file(dict* lookup_table, char* filename) {
         previous_word = strdup(cur_word);
     }
 
+    fclose(input_file);
+    free(previous_word);
+    free(cur_word);
+
     return lookup_table;
 }
 
@@ -59,7 +63,10 @@ dict* tokenise_files(options* ops) {
         char* filename = ops->files->array[i];
 
         temp = tokenise_file(lookup_table, filename);
-        if (temp == NULL) return NULL;
+        if (temp == NULL) {
+            lookup_table_free(lookup_table);
+            return NULL;
+        }
     }
 
     return lookup_table;

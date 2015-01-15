@@ -13,6 +13,16 @@ LengthedArray* arr_create(void) {
     return arr;
 }
 
+void arr_free(LengthedArray* arr) {
+    int i;
+
+    for (i=0; i<arr->len; i++) {
+        free(arr->array[i]);
+    }
+    free(arr->array);
+    free(arr);
+}
+
 /* may return pointer to new array if we had to resize */
 LengthedArray* arr_append(LengthedArray* arr, char* value) {
     if (arr->len == arr->size) {
