@@ -95,6 +95,59 @@ int testContainsKey(bool debug) {
     return res;
 }
 
+
+int testStress(bool debug) {
+    dict* d = dict_create(20);
+    d->debug = debug;
+
+    dict_set(d, "Depending", "on");
+    dict_set(d, "on", "the");
+    dict_set(d, "the", "format");
+    dict_set(d, "format", "string,");
+    dict_set(d, "string,", "the");
+    dict_set(d, "the", "function");
+    dict_set(d, "function", "may");
+    dict_set(d, "may", "expect");
+    dict_set(d, "expect", "a");
+    dict_set(d, "a", "sequence");
+    dict_set(d, "sequence", "of");
+    dict_set(d, "of", "additional");
+    dict_set(d, "additional", "arguments,");
+    dict_set(d, "arguments,", "each");
+    dict_set(d, "each", "containing");
+    dict_set(d, "containing", "a");
+    dict_set(d, "a", "pointer");
+    dict_set(d, "pointer", "to");
+    dict_set(d, "to", "allocated");
+    dict_set(d, "allocated", "storage");
+    dict_set(d, "storage", "where");
+    dict_set(d, "where", "the");
+    dict_set(d, "the", "interpretation");
+    dict_set(d, "interpretation", "of");
+    dict_set(d, "of", "the");
+    dict_set(d, "the", "extracted");
+    dict_set(d, "extracted", "characters");
+    dict_set(d, "characters", "is");
+    dict_set(d, "is", "stored");
+    dict_set(d, "stored", "with");
+    dict_set(d, "with", "the");
+
+    dict_free(d);
+
+    return TRUE;
+}
+
+
+int testOverwritingKeys(bool debug) {
+    dict* table = dict_create(5);
+
+    dict_set(table, "key", "value1");
+    dict_set(table, "key", "value2");
+
+    return strcmp(dict_get(table, "key"), "value2") == 0;
+}
+
+
 #define test(func, name) \
     printf("%s running\n-----------------------------\n\n", name);\
     assert(func(debug));\
@@ -108,6 +161,8 @@ int main(int argc, char const *argv[]) {
     test(testContainsKey, "testContainsKey");
     test(testResizeLarger, "testResizeLarger");
     test(testResizeSmaller, "testResizeSmaller");
+    test(testOverwritingKeys, "testOverwritingKeys");
+    test(testStress, "testStress");
 
     /* code */
     return 0;
