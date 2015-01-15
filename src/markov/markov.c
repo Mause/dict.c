@@ -98,6 +98,10 @@ int main(int argc, char const *argv[]) {
     }
 
     lookup_table = tokenise_files(ops);
+    if (lookup_table == NULL) {
+        fprintf(stderr, "Failed to load files\n");
+        return -1;
+    }
     assert(lookup_table->count != 0);
 
     if (lookup_table == NULL) {
