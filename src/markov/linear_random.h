@@ -4,8 +4,7 @@
 int rand();
 int rseed = 0;
 
-void srand(int x)
-{
+void srand(int x) {
     rseed = x;
 }
 
