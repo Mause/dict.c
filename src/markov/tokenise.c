@@ -13,7 +13,6 @@ void record(dict* d, char* key, char* value) {
 
     if (existing == NULL) {
         existing = arr_create();
-        dict_set(d, key, existing);
     }
 
     old_entry = dict_set(
