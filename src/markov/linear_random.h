@@ -1,3 +1,8 @@
+#ifdef _MSC_VER
+
+#ifndef LINEAR_RANDOM_H
+#define LINEAR_RANDOM_H
+
 #include <stdio.h>
 
 /* always assuming int is at least 32 bits */
@@ -27,3 +32,7 @@ int rand()
 }
 
 #endif/* MS_RAND */
+
+#endif
+
+#endif
