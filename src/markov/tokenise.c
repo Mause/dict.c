@@ -39,9 +39,7 @@ dict* tokenise_file(dict* lookup_table, char* filename) {
     assert(fscanf(input_file, "%s", previous_word) == 1);
 
     while (feof(input_file) == 0) {
-        assert(cur_word != NULL);
-        if(fscanf(input_file, "%s", cur_word) != 1) break;
-        if (cur_word == NULL) break;
+        fscanf(input_file, "%s", cur_word);
 
         record(lookup_table, strdup(previous_word), strdup(cur_word));
 
@@ -55,6 +53,7 @@ dict* tokenise_file(dict* lookup_table, char* filename) {
 
     return lookup_table;
 }
+
 
 dict* tokenise_files(options* ops) {
     int i;

@@ -11,8 +11,10 @@ options* parse_options(int argc, char const *argv[]) {
     for (i=1; i<argc; i++) {
                if (strcmp(argv[i], "-d") == 0) {
             ops->debug = TRUE;
+
         } else if (strcmp(argv[i], "-n") == 0) {
             ops->num_sentences = atoi(argv[++i]);
+
         } else {
             ops->files = arr_append(ops->files, strdup(argv[i]));
         }
