@@ -54,6 +54,14 @@ char* coalesce_word_array(LengthedArray* arr, int length) {
 }
 
 
+bool is_ending(char c) {
+    switch(c) {
+    case '.': case '?': case '!': return TRUE;
+    default:                      return FALSE;
+    }
+}
+
+
 char* build_markov_string(dict* lookup_table) {
     int num, length;
     LengthedArray* word_arr;
@@ -90,7 +98,7 @@ char* build_markov_string(dict* lookup_table) {
         length += 1 + strlen(previous_word);
 
         // do while we've not encountered a word ending in a full-stop
-    } while (previous_word[strlen(previous_word)-1] != '.');
+    } while (!is_ending(previous_word[strlen(previous_word)-1]));
 
     str = coalesce_word_array(word_arr, length);
     arr_free(word_arr);
