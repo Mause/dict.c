@@ -78,17 +78,17 @@ int testContainsKey(bool debug) {
     table->debug = debug;
 
     // "An empty hashtable shouldn't contain the key",
-    res = res && (!contains_key(table, "world"));
+    res = res && (!dict_contains_key(table, "world"));
 
     dict_set(table, "world", "hello");
 
     // "hashtable should contain a key after it has been put in",
-    res = res && contains_key(table, "world");
+    res = res && dict_contains_key(table, "world");
 
     dict_remove(table, "world");
 
     // "hashtable shouldn't contain a key that has been removed",
-    res = res && (!contains_key(table, "world"));
+    res = res && (!dict_contains_key(table, "world"));
 
     dict_free(table);
 
