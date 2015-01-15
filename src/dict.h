@@ -12,6 +12,7 @@ typedef struct {
     int count;
     int max_size;
     dict_entry** entries;
+    bool debug;
 } dict;
 
 dict* dict_create(int max_size);

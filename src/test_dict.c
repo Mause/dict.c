@@ -4,9 +4,10 @@
 #include "dict.h"
 #include "bool.h"
 
-int testBasic(void) {
+int testBasic(bool debug) {
     bool res;
     dict* table = dict_create(100);
+    table->debug = debug;
 
     dict_set(table, "World", "Hello");
 
@@ -20,9 +21,10 @@ int testBasic(void) {
     return res;
 }
 
-int testRemoveValue(void) {
+int testRemoveValue(bool debug) {
     bool res;
     dict* table = dict_create(20);
+    table->debug = debug;
 
     dict_set(table, "World", "Hello");
 
@@ -35,9 +37,10 @@ int testRemoveValue(void) {
     return res;
 }
 
-int testResizeLarger(void) {
+int testResizeLarger(bool debug) {
     bool res;
     dict* table = dict_create(3);
+    table->debug = debug;
 
     dict_set(table, "World", "Hello");
     dict_set(table, "Worle", "Hello");
@@ -50,10 +53,11 @@ int testResizeLarger(void) {
     return res;
 }
 
-int testResizeSmaller(void) {
+int testResizeSmaller(bool debug) {
     bool res;
     int actual;
     dict* table = dict_create(7);
+    table->debug = debug;
 
     // internally we choose the next largest prime than the number specified
     actual = table->max_size;
@@ -68,9 +72,10 @@ int testResizeSmaller(void) {
     return res;
 }
 
-int testContainsKey(void) {
+int testContainsKey(bool debug) {
     bool res = TRUE;
     dict* table = dict_create(7);
+    table->debug = debug;
 
     // "An empty hashtable shouldn't contain the key",
     res = res && (!contains_key(table, "world"));
@@ -92,10 +97,12 @@ int testContainsKey(void) {
 
 #define test(func, name) \
     printf("%s running\n-----------------------------\n\n", name);\
-    assert(func());\
+    assert(func(debug));\
     printf("%s succeeded\n-----------------------------\n\n", name); \
 
 int main(int argc, char const *argv[]) {
+    bool debug = (argc > 1) && (strcmp(argv[1], "-d") == 0);
+
     test(testBasic, "testBasic");
     test(testRemoveValue, "testRemoveValue");
     test(testContainsKey, "testContainsKey");

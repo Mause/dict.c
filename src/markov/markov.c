@@ -76,6 +76,10 @@ char* build_markov_string(dict* lookup_table) {
         int selected;
         LengthedArray* arr;
 
+        if (lookup_table->debug) {
+            printf("Word: %s\n", previous_word);
+        }
+
         arr = dict_get(lookup_table, previous_word);
         assert(arr != NULL);
 
@@ -139,6 +143,8 @@ int main(int argc, char const *argv[]) {
     }
     assert(lookup_table->count != 0);
 
+    if (ops->debug) printf("Done tokenising files\n");
+
     if (lookup_table == NULL) {
         fprintf(stderr, "Couldn't build lookup table\n");
         return;
@@ -148,6 +154,7 @@ int main(int argc, char const *argv[]) {
     srand(time(NULL));
 
     for (i=0; i<ops->num_sentences; i++) {
+        if (ops->debug) printf("Building sentence number %d\n", i);
         str = build_markov_string(lookup_table);
         printf("%s\n", str);
         free(str);

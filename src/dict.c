@@ -36,6 +36,7 @@ dict* dict_create(int max_size) {
     dict* dc = calloc(1, sizeof(*dc));
 
     dc->count = 0;
+    dc->debug = FALSE;
     dc->max_size = nextBiggestPrime(max_size);
     dc->entries = calloc(max_size, sizeof(**dc->entries));
 
@@ -69,6 +70,18 @@ static void put_entry(dict* d, dict_entry* entry) {
         d->count++;
     }
 
+    if (d->debug) {
+        printf(
+            "putting \"%s\" in slot %d. %d/%d, %f%% slots used, %d slots left\n",
+            entry->key,
+            idx,
+            d->count,
+            d->max_size,
+            percentageFull(d),
+            (d->max_size - d->count)
+        );
+        dict_render_usage(d);
+    }
     d->entries[idx] = entry;
 }
 
@@ -201,6 +214,10 @@ static int stepHash(int key) {
     return MAX_STEP - (key % MAX_STEP);
 }
 
+#ifdef _MSC_VER
+#include "Windows.h"
+#define sleep(seconds) Sleep(seconds / 1000)
+#endif
 
 static int find(dict* d, char* key) {
     int idx = hash(d, key),
@@ -208,6 +225,10 @@ static int find(dict* d, char* key) {
 
     while (!okFor(d, key, idx)) {
         idx = (idx + step) % d->max_size;
+        if (d->debug) {
+            printf("%d\n", idx);
+            sleep(0.125);
+        }
     }
 
     return idx;
@@ -295,6 +316,9 @@ static void resizeIfNeeded(dict* d) {
     if (new_size != d->max_size) {
         if (new_size < d->count) {
         } else {
+            if (d->debug) {
+                printf("from %d to %d\n", d->max_size, new_size);
+            }
             resize(d, new_size);
         }
     }

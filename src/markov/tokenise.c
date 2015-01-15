@@ -67,6 +67,8 @@ dict* tokenise_files(options* ops) {
             lookup_table_free(lookup_table);
             return NULL;
         }
+
+        if (ops->debug) printf("done tokenising %s\n", filename);
     }
 
     return lookup_table;
