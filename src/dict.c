@@ -214,7 +214,7 @@ static int find(dict* d, char* key) {
 }
 
 
-bool contains_key(dict* d, char* key) {
+bool dict_contains_key(dict* d, char* key) {
     dict_entry* entry;
 
     if (d->count == 0) return FALSE;

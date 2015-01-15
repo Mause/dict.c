@@ -21,5 +21,7 @@ void* dict_remove(dict* d, char* key);
 void dict_repr(dict* d);
 char** dict_keys(dict* d);
 bool dict_valid_entry(dict* d, int i);
+void dict_free(dict* d);
+bool dict_contains_key(dict* d, char* key);
 
 #endif
