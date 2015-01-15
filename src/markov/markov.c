@@ -23,7 +23,7 @@ char* get_starting(dict* lookup_table) {
     char *starting_word, **keys;
 
     keys = dict_keys(lookup_table);
-    starting_word = strdup(keys[rand_in_range(lookup_table->count)]);
+    starting_word = strdup(keys[rand_in_range(lookup_table->count)-1]);
     free(keys);
 
     return starting_word;
