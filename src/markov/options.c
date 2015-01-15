@@ -14,7 +14,7 @@ options* parse_options(int argc, char const *argv[]) {
         } else if (strcmp(argv[i], "-n") == 0) {
             ops->num_sentences = atoi(argv[++i]);
         } else {
-            ops->files = arr_append(ops->files, argv[i]);
+            ops->files = arr_append(ops->files, strdup(argv[i]));
         }
     }
 
