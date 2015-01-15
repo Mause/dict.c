@@ -38,23 +38,40 @@ bool ispunc(char c) {
 }
 
 
+char* coalesce_word_array(LengthedArray* arr, int length) {
+    int i;
+    char *start_of_str = calloc((length + 1), sizeof(char)),
+         *str = start_of_str;
+
+    for (i=0; i<arr->len; i++) {
+        if (i != 0) {
+            str = strcat(str, " ");
+        }
+        str = strcat(str, arr->array[i]);
+    }
+
+    return start_of_str;
+}
+
+
 char* build_markov_string(dict* lookup_table) {
-    int num;
-    char *str, *starting_word, start, end, *previous_word;
+    int num, length;
+    LengthedArray* word_arr;
+    char *str, start, end, *previous_word;
 
     // allow sentences up to 4096 chars in length
-    str = calloc(1 << 12, sizeof(char));
+    word_arr = arr_create();
 
     do {
-        starting_word = get_starting(lookup_table);
+        previous_word = get_starting(lookup_table);
 
-        start = starting_word[0];
-        end = starting_word[strlen(starting_word)-1];
+        start = previous_word[0];
+        end = previous_word[strlen(previous_word)-1];
     } while (ispunc(start) || ispunc(end));
 
-    strcat(str, starting_word);
+    length = strlen(previous_word);
+    arr_append(word_arr, strdup(previous_word));
 
-    previous_word = starting_word;
     do {
         int selected;
         LengthedArray* arr;
@@ -64,11 +81,15 @@ char* build_markov_string(dict* lookup_table) {
 
         selected = rand_in_range(arr->len);
         previous_word = arr->array[selected % arr->len];
-        strcat(str, " ");
-        strcat(str, previous_word);
+
+        arr_append(word_arr, strdup(previous_word));
+        length += 1 + strlen(previous_word);
 
         // do while we've not encountered a word ending in a full-stop
     } while (previous_word[strlen(previous_word)-1] != '.');
+
+    str = coalesce_word_array(word_arr, length);
+    arr_free(word_arr);
 
     // capitalise the first character of the sentence
     if (str[0] >= 'a' && str[0] <= 'z') {
