@@ -16,7 +16,7 @@ typedef struct {
 } dict;
 
 dict*       dict_create(int max_size);
-void        dict_set         (dict* d, char* key, void* value);
+dict_entry* dict_set         (dict* d, char* key, void* value);
 void*       dict_get         (dict* d, char* key);
 void*       dict_remove      (dict* d, char* key);
 bool        dict_contains_key(dict* d, char* key);

@@ -17,18 +17,25 @@ static int hash(dict* d, char* key);
 static int hash(dict* d, char* key);
 static int stepHash(int key);
 static void dict_free_entries(dict_entry** entries, int num);
-static void put_entry(dict* d, dict_entry* entry);
+static dict_entry* put_entry(dict* d, dict_entry* entry);
 static void resize(dict* d, int size);
 static void resizeIfNeeded(dict* d);
 
+/*
+if one existed, returns the old entry so that it can be free'd
+NULL is not value existed
+*/
+dict_entry* dict_set(dict* d, char* key, void* value) {
+    dict_entry *entry, *old_entry;
 
-void dict_set(dict* d, char* key, void* value) {
-    dict_entry* entry = dict_create_entry();
+    entry = dict_create_entry();
     entry->key = key;
     entry->value = value;
 
-    put_entry(d, entry);
+    old_entry = put_entry(d, entry);
     resizeIfNeeded(d);
+
+    return old_entry;
 }
 
 
@@ -59,8 +66,9 @@ void dict_render_usage(dict* d) {
 }
 
 
-static void put_entry(dict* d, dict_entry* entry) {
+static dict_entry* put_entry(dict* d, dict_entry* entry) {
     int idx;
+    dict_entry* old_entry = NULL;
 
     entry->state = IN_USE;
     idx = find(d, entry->key);
@@ -68,6 +76,8 @@ static void put_entry(dict* d, dict_entry* entry) {
     if (!dict_valid_entry(d, idx)) {
         // only increment contained count if we're adding something new
         d->count++;
+    } else {
+        old_entry = d->entries[idx];
     }
 
     if (d->debug) {
@@ -83,6 +93,8 @@ static void put_entry(dict* d, dict_entry* entry) {
         dict_render_usage(d);
     }
     d->entries[idx] = entry;
+
+    return old_entry;
 }
 
 

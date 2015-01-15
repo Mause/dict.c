@@ -8,6 +8,7 @@
 
 
 void record(dict* d, char* key, char* value) {
+    dict_entry* old_entry;
     LengthedArray* existing = dict_get(d, key);
 
     if (existing == NULL) {
@@ -15,11 +16,15 @@ void record(dict* d, char* key, char* value) {
         dict_set(d, key, existing);
     }
 
-    dict_set(
+    old_entry = dict_set(
         d,
         key,
         arr_append(existing, value)
     );
+    if (old_entry != NULL) {
+        free(old_entry->key);
+        free(old_entry);
+    }
 }
 
 
