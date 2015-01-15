@@ -27,6 +27,24 @@ void record(dict* d, char* key, char* value) {
 }
 
 
+bool is_lower(char c) {
+    return c >= 'A' && c <= 'Z';
+}
+
+
+char* lowercase(char* str) {
+    int i, len=strlen(str);
+
+    for (i=0; i<len; i++) {
+        if (is_lower(str[i])) {
+            str[i] += 'a' - 'A';
+        }
+    }
+
+    return str;
+}
+
+
 dict* tokenise_file(dict* lookup_table, char* filename) {
     FILE* input_file;
     char* previous_word = NULL, *cur_word;
@@ -37,9 +55,11 @@ dict* tokenise_file(dict* lookup_table, char* filename) {
     previous_word = calloc(100, sizeof(char));
     cur_word = calloc(100, sizeof(char));
     assert(fscanf(input_file, "%s", previous_word) == 1);
+    previous_word = lowercase(previous_word);
 
     while (feof(input_file) == 0) {
         fscanf(input_file, "%s", cur_word);
+        cur_word = lowercase(cur_word);
 
         record(lookup_table, strdup(previous_word), strdup(cur_word));
 
