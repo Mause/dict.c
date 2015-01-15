@@ -155,7 +155,7 @@ int main(int argc, char const *argv[]) {
 
     if (lookup_table == NULL) {
         fprintf(stderr, "Couldn't build lookup table\n");
-        return;
+        return -1;
     }
 
     // seed the random number generator; we want random sentences!
