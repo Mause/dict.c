@@ -7,7 +7,7 @@ typedef struct {
     int size;
 } LengthedArray;
 
-LengthedArray* arr_create();
+LengthedArray* arr_create(void);
 
 /* may return pointer to new array if we had to resize */
 LengthedArray* arr_append(LengthedArray* arr, char* value);

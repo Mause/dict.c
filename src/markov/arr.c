@@ -1,6 +1,8 @@
+#include <stdlib.h>
+
 #include "arr.h"
 
-LengthedArray* arr_create() {
+LengthedArray* arr_create(void) {
     LengthedArray* arr;
 
     arr = malloc(sizeof(LengthedArray));

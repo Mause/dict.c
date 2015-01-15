@@ -9,6 +9,7 @@
 #include "arr.h"
 #include "linear_random.h"
 #include "options.h"
+#include "tokenise.h"
 
 
 int rand_in_range(int max) {

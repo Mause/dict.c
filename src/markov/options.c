@@ -1,4 +1,5 @@
 #include "options.h"
+#include "arr.h"
 
 options* parse_options(int argc, char const *argv[]) {
     int i;
