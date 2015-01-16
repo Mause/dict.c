@@ -45,6 +45,15 @@ char* lowercase(char* str) {
 }
 
 
+char* get_word(FILE* in_file) {
+    char* word = calloc(100, sizeof(char));
+
+    assert(fscanf(in_file, "%s", word) == 1);
+
+    return word == NULL ? NULL : lowercase(word);
+}
+
+
 dict* tokenise_file(dict* lookup_table, char* filename) {
     FILE* input_file;
     char* previous_word = NULL, *cur_word;
@@ -52,14 +61,14 @@ dict* tokenise_file(dict* lookup_table, char* filename) {
     input_file = fopen(filename, "r");
     if (input_file == NULL) return NULL;
 
-    previous_word = calloc(100, sizeof(char));
-    cur_word = calloc(100, sizeof(char));
-    assert(fscanf(input_file, "%s", previous_word) == 1);
-    previous_word = lowercase(previous_word);
+    previous_word = get_word(input_file);
 
     while (feof(input_file) == 0) {
-        fscanf(input_file, "%s", cur_word);
-        cur_word = lowercase(cur_word);
+        cur_word = get_word(input_file);
+        if (cur_word == NULL) {
+            // no more words
+            break;
+        }
 
         record(lookup_table, strdup(previous_word), strdup(cur_word));
 
