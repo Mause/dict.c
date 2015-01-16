@@ -126,11 +126,6 @@ void lookup_table_free(dict* lookup_table) {
 }
 
 
-void printHelp(char const *argv[]) {
-    fprintf(stderr, "%s [-d] [-n number of sentences] input_file.txt [...] \n", argv[0]);
-}
-
-
 int main(int argc, char const *argv[]) {
     dict* lookup_table;
     options* ops;
@@ -138,11 +133,7 @@ int main(int argc, char const *argv[]) {
     int i;
 
     ops = parse_options(argc, argv);
-    if (ops->files->len == 0) {
-        printHelp(argv);
-        fprintf(stderr, "You must supply at least one source file\n");
-        return -1;
-    }
+    if (ops == NULL) return -1;
 
     lookup_table = tokenise_files(ops);
     if (lookup_table == NULL) {
