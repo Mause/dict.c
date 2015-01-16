@@ -1,6 +1,8 @@
 #ifndef ARR_H
 #define ARR_H
 
+#define GROW_FACTOR 1.25
+
 typedef struct {
     char** array;
     int len;

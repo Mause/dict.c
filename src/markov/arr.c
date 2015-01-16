@@ -29,9 +29,9 @@ LengthedArray* arr_append(LengthedArray* arr, char* value) {
         // is full, we reallocate
         arr->array = realloc(
             arr->array,
-            (arr->size * 1.25) *  sizeof(char*)
+            (arr->size * GROW_FACTOR) *  sizeof(char*)
         );
-        arr->size *= 1.25;
+        arr->size *= GROW_FACTOR;
     }
     arr->array[arr->len++] = value;
 
