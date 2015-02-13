@@ -1,0 +1,3 @@
+Depending on the format string, the function may expect a sequence of additional arguments, each containing a pointer to allocated storage where the interpretation of the extracted characters is stored with the appropriate type.
+There should be at least as many of these arguments as the number of values stored by the format specifiers. Additional arguments are ignored by the function.
+These arguments are expected to be pointers: to store the result of a fscanf operation on a regular variable, its name should be preceded by the reference operator (&) (see example).
