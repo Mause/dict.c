@@ -11,6 +11,6 @@ typedef struct {
     int state;
 } dict_entry;
 
-dict_entry* dict_create_entry();
+dict_entry* dict_create_entry(void);
 
 #endif

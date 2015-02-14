@@ -4,7 +4,7 @@
 #include "dict_entry.h"
 #include "bool.h"
 
-#define MAX_STEP 5
+#define MAX_STEP 3
 #define GLASS_HALF_FULL 60
 #define GLASS_HALF_EMPTY 30
 

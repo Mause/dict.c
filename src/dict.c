@@ -6,6 +6,7 @@
 #include "bool.h"
 #include "none.h"
 #include "dict.h"
+#include "primes.h"
 #include "dict_entry.h"
 
 static bool okFor(dict* d, char* key, int idx);
