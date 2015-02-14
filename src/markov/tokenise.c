@@ -15,11 +15,8 @@ void record(dict* d, char* key, char* value) {
         existing = arr_create();
     }
 
-    old_entry = dict_set(
-        d,
-        key,
-        arr_append(existing, value)
-    );
+    arr_append(existing, value);
+    old_entry = dict_set(d, key, existing);
     if (old_entry != NULL) {
         free(old_entry->key);
         free(old_entry);
@@ -27,7 +24,7 @@ void record(dict* d, char* key, char* value) {
 }
 
 
-bool is_lower(char c) {
+bool is_upper(char c) {
     return c >= 'A' && c <= 'Z';
 }
 
@@ -36,7 +33,7 @@ char* lowercase(char* str) {
     int i, len=strlen(str);
 
     for (i=0; i<len; i++) {
-        if (is_lower(str[i])) {
+        if (is_upper(str[i])) {
             str[i] += 'a' - 'A';
         }
     }
@@ -48,9 +45,13 @@ char* lowercase(char* str) {
 char* get_word(FILE* in_file) {
     char* word = calloc(100, sizeof(char));
 
-    assert(fscanf(in_file, "%s", word) == 1);
+    fscanf(in_file, "%s", word);
 
-    return word == NULL ? NULL : lowercase(word);
+    if (word[0] == '\x00') {
+        return NULL;
+    } else {
+        return lowercase(word);
+    }
 }
 
 
@@ -61,7 +62,7 @@ dict* tokenise_file(dict* lookup_table, char* filename) {
     input_file = fopen(filename, "r");
     if (input_file == NULL) return NULL;
 
-    previous_word = get_word(input_file);
+    cur_word = previous_word = get_word(input_file);
 
     while (feof(input_file) == 0) {
         cur_word = get_word(input_file);
@@ -84,15 +85,15 @@ dict* tokenise_file(dict* lookup_table, char* filename) {
 }
 
 
-dict* tokenise_files(options* ops) {
+dict* tokenise_files(LengthedArray* files, bool debug) {
     int i;
     dict *lookup_table, *temp;
 
     lookup_table = dict_create(10);
-    lookup_table->debug = ops->debug;
+    lookup_table->debug = debug;
 
-    for (i=0; i<ops->files->len; i++) {
-        char* filename = ops->files->array[i];
+    for (i=0; i<files->len; i++) {
+        char* filename = files->array[i];
 
         temp = tokenise_file(lookup_table, filename);
         if (temp == NULL) {
@@ -100,7 +101,7 @@ dict* tokenise_files(options* ops) {
             return NULL;
         }
 
-        if (ops->debug) printf("done tokenising %s\n", filename);
+        if (debug) printf("done tokenising %s\n", filename);
     }
 
     return lookup_table;
